@@ -1,2 +1,73 @@
 /* Main CSS for kerberus.io */
-/* test */
+
+/*
+ * Globals
+ */
+:root {
+    --main: #F8AA00;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+header {
+    border-bottom: 1px solid var(--main);
+}
+.vertical-text {
+    writing-mode:tb-rl;
+    -webkit-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform:rotate(180deg);
+    transform: rotate(180deg);
+    white-space:nowrap;
+    display:block;
+    bottom:0;
+}
+.flex-column {
+    border-left: 2px solid var(--main);
+}
+ /*
+ * Header
+ */
+.header-link:hover {
+    text-decoration: none;
+}
+
+.logo-bullet {
+    font-size: 4pt;
+    color: var(--main);
+    vertical-align: middle;
+}
+/*
+ * Content
+ */
+.card {
+    border-left: 2px solid var(--main);
+}
+.card-img-right {
+    width: 35%;
+    height: 35%;
+}
+ .jumbotron {
+    background-image: url(https://images.pexels.com/photos/249798/pexels-photo-249798.png?auto=compress&cs=tinysrgb&h=750&w=1260);
+
+ }
+.jumbotron .container {
+    background-color: rgba(37,36,34, .9);
+}
+.social {
+    font-size: 1.5em;
+}
+
+ /*
+ * Footer
+ */
+.footer .container {
+    color:#F4F3EF;
+    padding: 1em;
+    margin: 1em 0em 1em 0em;
+    width: 100%;
+    background-color: #252422;
+}

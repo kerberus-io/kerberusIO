@@ -7,8 +7,11 @@
             </h3>
 {#            <div class="mb-1 text-muted">Nov 12</div>#}
             <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-            <a href="#">Continue reading</a>
+            <span class="social">
+                <a href="#"><i class="fab fa-github-square"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </span>
         </div>
-        <img class="card-img-right flex-auto d-none d-lg-block" src="{{ url_for('static', filename='img/placeholder_card.png') }}" alt="Card image cap">
+        <img class="card-img-right flex-auto d-none d-lg-block" src="static/img/{{owner['name']}}.jpg" alt="Card image cap">
     </div>
 </div>
