@@ -15,6 +15,14 @@ class Config(object):
 
     TITLE = "kerberus.io"
 
+    # Email Config
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = ""
+    MAIL_PASSWORD = ""
+    MAIL_DEFAULT_SENDER = ""
+
 
 # Overrides the default Config Object for Production
 class ProductionConfig(Config):
