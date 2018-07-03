@@ -14,15 +14,21 @@
   text-decoration: none;
 }
 
-.header-link:hover {
-    text-decoration: none;
-}
+/*.header-link {*/
+    /*color: lightgray;*/
+/*}*/
 
-.logo-bullet {
-    font-size: 4pt;
-    color: orange;
-    vertical-align: middle;
-}
+/*.header-link:hover {*/
+    /*text-decoration: none;*/
+    /*color: #F8AA00;*/
+/*}*/
+
+/*.logo-bullet {*/
+    /*font-size: 4pt;*/
+    /*color: orange;*/
+    /*vertical-align: middle;*/
+/*}*/
+
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
