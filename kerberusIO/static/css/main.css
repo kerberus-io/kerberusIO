@@ -3,20 +3,35 @@
 /*
  * Globals
  */
+
 :root {
-    --main: #F8AA00;
+    /* Colors */
+    --main: #F8AA00;                /* var(--main) */
+    --dark: rgba(37,36,34, .9);     /* var(--dark) */
+    --light: gray;                  /* var(--light) */
+    --white: white;                 /* var(--white) */
+
+
+    /* Measurements */
+    --header-height: calc(3.25em);                          /* var(--header-height) */
+    --section-height: calc(100vh - var(--header-height));   /* var(--section-height) */
+    --section-width: calc(100vw);                           /* var(--section-width) */
+
+    --copy-height: calc(var(--section-height) - 2rem);      /* var(--copy-height) */
+    --copy-width: calc(var(--section-width) - 2rem);        /* var(--copy-width) */
+
 }
+
 
 a {
     color: inherit;
     text-decoration: none;
 }
+
 header {
     border-bottom: 1px solid var(--main);
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*right: 0;*/
 }
+
 .vertical-text {
     writing-mode:tb-rl;
     -webkit-transform:rotate(180deg);
@@ -28,12 +43,15 @@ header {
     display:block;
     bottom:0;
 }
+
 .flex-column {
     border-left: 2px solid var(--main);
 }
+
  /*
  * Header
  */
+
 .header-link:hover {
     text-decoration: none;
 }
@@ -43,6 +61,54 @@ header {
     color: var(--main);
     vertical-align: middle;
 }
+
+.container-head {
+    position: fixed;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--main);
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.header-link {
+    color: var(--light);
+}
+
+.header-link:hover {
+    text-decoration: none;
+    color: var(--main);
+}
+
+.header-link:hover .logo-bullet {
+    color: var(--light);
+}
+
+.logo-bullet {
+    font-size: 4pt;
+    /*color: orange;*/
+    color: var(--light);
+    vertical-align: middle;
+}
+
+
+.nav-link .active {
+    color: var(--main);
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+    color: var(--main);
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--main);
+}
+
+.active {
+    color: var(--main);
+}
+
 /*
  * Content
  */
@@ -53,23 +119,56 @@ header {
     width: 35%;
     height: 35%;
 }
- .jumbotron {
-    background-image: url("http://localhost:5000/static/img/haxor.png");
-    background-repeat: no-repeat;
-    background-size: 60px 100%;
-    min-height: 80vh;
-    /*margin-top: 5vh;*/
- }
+
+.jumbotron {
+    min-height: var(--section-height);
+    align-items: center;
+    border-radius: 0;
+}
 
 .jumbotron .container {
-    background-color: rgba(37,36,34, .9);
+    align-items: center;
 }
+
+.jumbotron:last-of-type {
+    min-height: calc(var(--section-height) - 6rem);
+}
+
+.section-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .social {
     font-size: 1.5em;
 }
 
 .section-row {
-    min-height: calc(80vh - 1rem);
+    min-height: var(--copy-height);
+    width: var(--copy-width);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-row:last-of-type {
+    min-height: calc(var(--section-height) - 6rem);
+}
+
+.copy-splash {
+    min-height: var(--copy-height);
+    width: var(--copy-width);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: black;
+}
+
+div.content > .row {
+    align-items: center;
 }
 
 .contact-container {
@@ -84,50 +183,42 @@ header {
 
 .contact-link:hover {
     text-decoration: none;
-    color: orange;
+    color: var(--main);
 }
 
+.home-style {
+    background-color: pink;
+}
+
+.about-style {
+    background-color: blue;
+}
+
+.services-style {
+    background-color: yellow;
+}
+
+.contact-style {
+    background-color: purple;
+}
 
  /*
  * Footer
  */
-.footer .container {
+.footer {
     color:#F4F3EF;
     padding: 1em;
-    margin: 1em 0em 1em 0em;
+    /*margin: 1em 0em 1em 0em;*/
     width: 100%;
-    background-color: #252422;
+    background-color: var(--dark);
 }
 
 
-.container-head {
-    position: fixed;
-    background-color: white;
-    z-index: 2000;
-    left: 0;
-    right: 0;
+
+.section-jumbo {
+    margin: 0;
 }
 
-.header-link {
-    color: gray;
-}
-
-.header-link:hover {
-    text-decoration: none;
-    color: #F8AA00;
-}
-
-.header-link:hover .logo-bullet {
-    color: gray;
-}
-
-.logo-bullet {
-    font-size: 4pt;
-    /*color: orange;*/
-    color: gray;
-    vertical-align: middle;
-}
-
-.active {
-    color: orange;
+div.section-jumbo:first-of-type {
+    margin-top: var(--header-height);
 }

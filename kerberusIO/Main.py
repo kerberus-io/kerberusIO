@@ -5,12 +5,23 @@ from kerberusIO.utils.mailer import mailer
 
 @app.route('/')
 def main():
+    # TODO: make dynamic
+
     phone = {"pretty": "(612) 555 - 5555", "link": "612-555-5555"}
+    twitter = {"handle": "kerberusIO"}
     owners = [
         {"name": "Aaron Souer", "github": "asouer", "linkedin": "asouer"},
         {"name": "Lincoln Yellick", "github": "lyellick", "linkedin": "lincoln-hach-yellick-3867b088"}
     ]
-    return render_template("index.html", owners=owners, phone=phone)
+
+    home = {"headline": "L337 Haxor Sites", "copy": "We make the best sites", "name": "home", "type": "splash"}
+    about = {"headline": "Stuff and Things", "copy": "Thats what we do", "name": "about", "type": "splash"}
+    services = {"headline": "Tech and Code", "copy": "Technobabble and Buzzwords", "name": "services", "type": "splash"}
+    contact_page = {"phone": phone, "twitter": twitter, "owners": owners, "name": "contact", "type": "contact"}
+
+    sections = [home, about, services, contact_page]
+
+    return render_template("index.html", sections=sections)
 
 
 @app.route('/contact', methods=['POST'])

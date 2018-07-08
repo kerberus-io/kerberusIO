@@ -8,21 +8,21 @@ $(document).ready(function(){
     // Make sure this.hash has a value before overriding default behavior
     if (this.hash !== "") {
 
-        if (this.hash === "#about-section") {
-            setAbout();
-        }
+        // if (this.hash === "#about-section") {
+        //     setAbout();
+        // }
 
-        if (this.hash === "#services-section") {
-            setServices();
-        }
+        // if (this.hash === "#services-section") {
+        //     setServices();
+        // }
 
-        if (this.hash === "#contact-section") {
-            setContact();
-        }
+        // if (this.hash === "#contact-section") {
+        //     setContact();
+        // }
 
-        if (this.hash === "#top") {
-            setHome();
-        }
+        // if (this.hash === "#top") {
+        //     setHome();
+        // }
 
       // Prevent default anchor click behavior
       event.preventDefault();
@@ -41,36 +41,41 @@ $(document).ready(function(){
               window.location.hash = hash;
           } else {
               window.location.hash = "";
-              document.location.href = String( document.location.href ).replace( "/#", "" );
+              // document.location.href = String( document.location.href ).replace( "/#", "" );
           }
       });
     } // End if
   });
 });
 
+// TODO: Set so scrolling (not clicking) decides what is active
+
 $(window).on("scroll", function() {
   var scrollPosition = scrollY || pageYOffset;
 
-  if (scrollPosition < $("#about-section").position().top - 50) { //} - $(window).height()) {
+  if (scrollPosition < $("#about").position().top - 50) { //} - $(window).height()) {
       setHome()
   }
 
-  if (scrollPosition > $("#about-section").position().top - 50 && // - $(window).height() - 3 &&
-      scrollPosition < $("#services-section").position().top) { // - $(window).height() + 3) {
+  if (scrollPosition > $("#about").position().top - 50 && // - $(window).height() - 3 &&
+      scrollPosition < $("#services").position().top) { // - $(window).height() + 3) {
       setAbout()
   }
 
-  if (scrollPosition > $("#services-section").position().top - 50 && //- $(window).height() - 3 &&
-      scrollPosition < $("#services-section").position().top + 200) { // - $(window).height() + 3) {
+  if (scrollPosition > $("#services").position().top - 50 && //- $(window).height() - 3 &&
+      scrollPosition < $("#contact").position().top) { // - $(window).height() + 3) {
       setServices()
   }
 
-  // if (scrollPosition > $("#contact-link").position().top - $(window).height() - 3 &&
-  //     scrollPosition < $("#contact-link").position().top - $(window).height() + 3) {
-
-    if (scrollPosition === $(document).height() - $(window).height()) {
+  if (scrollPosition > $("#contact").position().top - 50 && //- $(window).height() - 3 &&
+      scrollPosition < $("#contact").position().top) { // - $(window).height() + 3) {
       setContact()
   }
+
+
+  // if (scrollPosition === $(document).height() - $(window).height()) {
+  //     setContact()
+  // }
 
 });
 

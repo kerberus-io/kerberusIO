@@ -1,0 +1,21 @@
+<a id="{{ section["name"] }}"></a>
+<div class="jumbotron p-3 p-md-2 text-white section-jumbo {{ section["name"] }}-style">
+    <div class="content section-content">
+        <div class="row section-row">
+
+            {% if section["type"] == "splash" %}
+
+                {% include "partials/sections/splash-section.html" %}
+
+            {% endif %}
+
+            {% if section["type"] == "contact" %}
+
+                {% include "partials/sections/contact-section.html" %}
+
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
