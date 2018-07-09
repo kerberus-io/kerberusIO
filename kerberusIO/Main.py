@@ -18,13 +18,22 @@ def main():
 
     about = {"name": "about", "type": "split",
              "left": {"type": "list", "list":
-                      ["Placeholder", "one", "two", "three", "four", "this needs to be styled better"]
+                      [
+                          {"title": "Placeholder", "copy": "this is a placeholder item"},
+                          {"title": "Item One", "copy": "this is a placeholder item"},
+                          {"title": "Item Two", "copy": "this is a placeholder item"},
+                          {"title": "Item Three", "copy": "this is a placeholder item"},
+                          {"title": "Item Four", "copy": "this is a placeholder item"}]
                       },
              "right": {"type": "splash", "headline": "Things and Stuff", "copy": "We also do that!"}
              }
 
     services = {"name": "services", "type": "split",
-                "right": {"type": "image", "file": "placeholder_card.png", "alt": "this is just a placeholder"},
+                "right": {
+                    "type": "image",
+                    "file": "placeholder_card.png",
+                    "alt": "this is just a placeholder",
+                    "title": "Image Placeholder"},
                 "left": {"type": "splash", "headline": "Tech and Code", "copy": "Technobabble and Buzzwords"}
                 }
 

@@ -85,16 +85,22 @@ header {
     color: var(--light);
 }
 
+.navbar-light .navbar-brand .active {
+    color: var(--dark);
+}
+
+.navbar-light .navbar-brand {
+    color: var(--light);
+}
+
 .logo-bullet {
     font-size: 4pt;
-    /*color: orange;*/
     color: var(--light);
     vertical-align: middle;
 }
 
-
-.nav-link .active {
-    color: var(--main);
+.navbar-light .navbar-nav .nav-link {
+    color: var(--light);
 }
 
 .navbar-light .navbar-nav .nav-link.active {
@@ -113,11 +119,29 @@ header {
  * Content
  */
 .card {
+    border: 0;
     border-left: 2px solid var(--main);
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
+
 .card-img-right {
     width: 35%;
     height: 35%;
+}
+
+.card-body {
+    color: var(--dark);
+    /*border-bottom-right-radius: 0;*/
+    /*border-top-right-radius: 0;*/
+}
+
+span.social > a:hover {
+    color: var(--main);
+}
+
+a.card-body:hover {
+    color: var(--main);
 }
 
 .jumbotron {
@@ -164,9 +188,12 @@ header {
     justify-content: center;
     text-align: center;
 
-    color: black;
+    color: var(--dark);
 }
 
+.list-group{
+    width: 100%;
+}
 
 div.content > .row {
     align-items: center;
