@@ -155,7 +155,7 @@ header {
     min-height: calc(var(--section-height) - 6rem);
 }
 
-.copy-splash {
+.copy {
     min-height: var(--copy-height);
     width: var(--copy-width);
 
@@ -166,6 +166,7 @@ header {
 
     color: black;
 }
+
 
 div.content > .row {
     align-items: center;

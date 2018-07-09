@@ -9,6 +9,12 @@
 
             {% endif %}
 
+            {% if section["type"] == "split" %}
+
+                {% include "partials/sections/split-section.html" %}
+
+            {% endif %}
+
             {% if section["type"] == "contact" %}
 
                 {% include "partials/sections/contact-section.html" %}

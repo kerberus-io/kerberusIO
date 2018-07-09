@@ -15,8 +15,17 @@ def main():
     ]
 
     home = {"headline": "L337 Haxor Sites", "copy": "We make the best sites", "name": "home", "type": "splash"}
-    about = {"headline": "Stuff and Things", "copy": "Thats what we do", "name": "about", "type": "splash"}
-    services = {"headline": "Tech and Code", "copy": "Technobabble and Buzzwords", "name": "services", "type": "splash"}
+
+    about = {"name": "about", "type": "split",
+             "left": {"type": "list", "list": ["one", "two", "three", "four", "this needs to be styled to be a list"]},
+             "right": {"type": "splash", "headline": "Things and Stuff", "copy": "We also do that!"}
+             }
+
+    services = {"name": "services", "type": "split",
+                "right": {"type": "image", "file": "placeholder_card.png", "alt": "this is just a placeholder"},
+                "left": {"type": "splash", "headline": "Tech and Code", "copy": "Technobabble and Buzzwords"}
+                }
+
     contact_page = {"phone": phone, "twitter": twitter, "owners": owners, "name": "contact", "type": "contact"}
 
     sections = [home, about, services, contact_page]
