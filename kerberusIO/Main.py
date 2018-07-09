@@ -17,7 +17,7 @@ def main():
     home = {"headline": "L337 Haxor Sites", "copy": "We make the best sites", "name": "home", "type": "splash"}
 
     about = {"name": "about", "type": "split",
-             "left": {"type": "list", "list": ["one", "two", "three", "four", "this needs to be styled to be a list"]},
+             "left": {"type": "list", "list": ["one", "two", "three", "four", "this needs to be styled better"]},
              "right": {"type": "splash", "headline": "Things and Stuff", "copy": "We also do that!"}
              }
 
