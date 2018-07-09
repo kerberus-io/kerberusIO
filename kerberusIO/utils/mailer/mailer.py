@@ -35,3 +35,5 @@ def send_confirmation(reply_to: str, subject: str, message):
     contact_msg.html = message
 
     mail.send(contact_msg)
+
+# TODO: make use of a message queue to speed up mailing.

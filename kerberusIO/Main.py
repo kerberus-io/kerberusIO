@@ -17,7 +17,9 @@ def main():
     home = {"headline": "L337 Haxor Sites", "copy": "We make the best sites", "name": "home", "type": "splash"}
 
     about = {"name": "about", "type": "split",
-             "left": {"type": "list", "list": ["one", "two", "three", "four", "this needs to be styled better"]},
+             "left": {"type": "list", "list":
+                      ["Placeholder", "one", "two", "three", "four", "this needs to be styled better"]
+                      },
              "right": {"type": "splash", "headline": "Things and Stuff", "copy": "We also do that!"}
              }
 
@@ -37,6 +39,14 @@ def main():
 def contact():
 
     form = request.form
+    mailer.send_contact(form["email"], form["subject"], form["message"])
     mailer.send_confirmation(form["email"], form["subject"], form["message"])
 
     return redirect(url_for('dev'))
+
+
+@app.route('/test_confirm_email')
+def test_confirm():
+
+    email = {"title": "Test Confirm", "message": "This is a test email"}
+    return render_template("email/confirmation_email.html", email=email)
