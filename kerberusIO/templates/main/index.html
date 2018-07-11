@@ -1,0 +1,33 @@
+{% extends "main/layout.html" %}
+
+
+{% block head %}
+
+    <!-- Custom styles for this page included below -->
+
+{% endblock %}
+
+
+{% block body %}
+
+
+    {% include "main/partials/sections/header.html" %}
+
+    <main>
+
+        {% for section in sections %}
+            {% include "main/partials/sections/section.html" %}
+        {% endfor %}
+
+        {% include "main/partials/sections/footer.html" %}
+
+    </main>
+
+{% endblock %}
+
+{% block foot %}
+
+    {% include "main/partials/modals/contact.html" %}
+    {% include "shared/partials/bootstrap/js.html" %}
+
+{% endblock %}

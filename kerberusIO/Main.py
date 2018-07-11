@@ -14,7 +14,7 @@ def main():
         {"name": "Lincoln Yellick", "github": "lyellick", "linkedin": "lincoln-hach-yellick-3867b088"}
     ]
 
-    home = {"headline": "L337 Haxor Sites", "copy": "We make the best sites", "name": "home", "type": "splash"}
+    home = {"headline": "1337 Haxor Sites", "copy": "We make the best sites", "name": "home", "type": "splash", "color": "var(--black)"}
 
     about = {"name": "about", "type": "split",
              "left": {"type": "list", "list":
@@ -25,13 +25,13 @@ def main():
                           {"title": "Item Three", "copy": "this is a placeholder item"},
                           {"title": "Item Four", "copy": "this is a placeholder item"}]
                       },
-             "right": {"type": "splash", "headline": "Things and Stuff", "copy": "We also do that!"}
+             "right": {"type": "splash", "headline": "Things and Stuff", "copy": "We also do that!", "color": "var(--white)"}
              }
 
     services = {"name": "services", "type": "split",
                 "right": {
                     "type": "image",
-                    "file": "placeholder_card.png",
+                    "file": "code.png",
                     "alt": "this is just a placeholder",
                     "title": "Image Placeholder"},
                 "left": {"type": "splash", "headline": "Tech and Code", "copy": "Technobabble and Buzzwords"}
@@ -41,7 +41,7 @@ def main():
 
     sections = [home, about, services, contact_page]
 
-    return render_template("index.html", sections=sections)
+    return render_template("main/index.html", sections=sections)
 
 
 @app.route('/contact', methods=['POST'])
@@ -52,6 +52,29 @@ def contact():
     mailer.send_confirmation(form["email"], form["subject"], form["message"])
 
     return redirect(url_for('dev'))
+
+
+@app.route('/admin')
+def admin():
+
+    # NOTE: This is a mock up and does not actually do any authentication
+    authenticated = False
+
+    if authenticated:
+        return render_template("admin/index.html")
+    else:
+        return render_template("admin/portal.html")
+
+
+@app.route('/admin/login', methods=['POST'])
+def login():
+
+    authenticated = True
+
+    if authenticated:
+        return render_template("admin/index.html")
+    else:
+        return render_template("admin/portal.html")
 
 
 @app.route('/test_confirm_email')

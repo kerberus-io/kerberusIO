@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {#  meta tags  #}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+        {% include "shared/partials/head/resources.html" %}
+
+        <title>{{ config["TITLE"] }} - Admin</title>
+
+        {% block head %}
+        {% endblock %}
+
+
+    </head>
+    <body>
+        <a id="top"></a>
+
+        {% block body %}
+        {% endblock %}
+
+        {% block foot %}
+        {% endblock %}
+    </body>
+</html>

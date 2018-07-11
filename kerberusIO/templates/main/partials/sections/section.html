@@ -5,22 +5,27 @@
 
             {% if section["type"] == "splash" %}
 
-                {% include "partials/sections/splash-section.html" %}
+                {% include "main/partials/sections/splash/main.html" %}
 
             {% endif %}
 
             {% if section["type"] == "split" %}
 
-                {% include "partials/sections/split-section.html" %}
+                {% include "main/partials/sections/split/main.html" %}
 
             {% endif %}
 
             {% if section["type"] == "contact" %}
 
-                {% include "partials/sections/contact-section.html" %}
+                {% include "main/partials/sections/contact/main.html" %}
 
             {% endif %}
 
+            {% if section["type"] == "list" %}
+
+                {% include "main/partials/sections/list/main.html" %}
+
+            {% endif %}
 
         </div>
     </div>

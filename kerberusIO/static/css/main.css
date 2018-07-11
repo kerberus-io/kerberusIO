@@ -10,6 +10,7 @@
     --dark: rgba(37,36,34, .9);     /* var(--dark) */
     --light: gray;                  /* var(--light) */
     --white: white;                 /* var(--white) */
+    --black: black;                 /* var(--black) */
 
 
     /* Measurements */
@@ -81,13 +82,13 @@ header {
     color: var(--main);
 }
 
-.header-link:hover .logo-bullet {
-    color: var(--light);
-}
+/*.header-link:hover .logo-bullet {*/
+    /*color: var(--light);*/
+/*}*/
 
-.navbar-light .navbar-brand .active {
-    color: var(--dark);
-}
+/*.navbar-light .navbar-brand .active {*/
+    /*color: var(--dark);*/
+/*}*/
 
 .navbar-light .navbar-brand {
     color: var(--light);
@@ -215,19 +216,29 @@ div.content > .row {
 }
 
 .home-style {
-    background-color: pink;
+    background-color: var(--light);
 }
 
 .about-style {
-    background-color: blue;
+    background-color: var(--dark);
 }
 
+/*.about-style.copy > div, h1 {*/
+    /*color: var(--light);*/
+/*}*/
+
+/*.about-style.copy > div, h3 {*/
+    /*color: var(--light);*/
+/*}*/
+
+
+
 .services-style {
-    background-color: yellow;
+    background-color: var(--white);
 }
 
 .contact-style {
-    background-color: purple;
+    background-color: var(--light);
 }
 
  /*
