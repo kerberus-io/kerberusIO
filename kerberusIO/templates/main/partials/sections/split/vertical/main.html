@@ -1,0 +1,38 @@
+<div class="col-md-6 copy">
+
+    {% with section = section["left"], name = section["name"] %}
+
+        {% if section["type"] == "splash" %}
+            {% include "main/partials/sections/splash/main.html" %}
+        {% endif %}
+
+        {% if section["type"] == "list" %}
+            {% include "main/partials/sections/list/main.html" %}
+        {% endif %}
+
+        {% if section["type"] == "image" %}
+            {% include "main/partials/sections/image/main.html" %}
+        {% endif %}
+
+    {% endwith %}
+
+</div>
+<div class="col-md-6 copy">
+
+    {% with section = section["right"], name = section["name"] %}
+
+        {% if section["type"] == "splash" %}
+            {% include "main/partials/sections/splash/main.html" %}
+        {% endif %}
+
+        {% if section["type"] == "list" %}
+            {% include "main/partials/sections/list/main.html" %}
+        {% endif %}
+
+        {% if section["type"] == "image" %}
+            {% include "main/partials/sections/image/main.html" %}
+        {% endif %}
+
+    {% endwith %}
+
+</div>

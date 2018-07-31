@@ -1,0 +1,34 @@
+<div>
+    <li class="list-group-item">
+        <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand">{{ section['name'] }}</a>
+            <a class="navbar-brand">{{ section['type'] }}</a>
+            <div class="nav ml-auto">
+                <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#edit-{{ section['name'] }}-modal">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#delete-{{ section['name'] }}-modal">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+                <a class="nav-link" data-toggle="collapse" href="#{{ section['name'] }}-collapse" role="button" aria-expanded="false" aria-controls="{{ section['name'] }}-collapse">
+                    <i class="fas fa-angle-down"></i>
+                </a>
+
+            </div>
+        </nav>
+        <div class="collapse" id="{{ section['name'] }}-collapse">
+
+            {% include 'admin/partials/sections/sections/collapse/' + section['type'] + '/main.html' %}
+
+        </div>
+
+    </li>
+    {% with modal={ "id": "delete-" + section['name'], "title": section['name'], "buttons": [
+        {"type": "submit", "text": "delete"},
+        {"type": "button", "text": "no"}] } %}
+        {% include 'admin/partials/modals/sections/delete.html' %}
+    {% endwith %}
+    {% with modal={ "id": "edit-" + section['name'], "title": section['name'] } %}
+        {% include 'admin/partials/modals/sections/edit.html' %}
+    {% endwith %}
+</div>

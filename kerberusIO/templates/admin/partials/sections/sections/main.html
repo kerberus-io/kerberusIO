@@ -1,0 +1,14 @@
+<div class="tab-pane fade" id="sections" role="tabpanel" aria-labelledby="sections-tab">
+    <div style="color: black">
+        <div class="jumbotron">
+
+            <ul class="list-group">
+                <li class="list-group-item active">Sections</li>
+                {% for section in sections %}
+                    {% include "admin/partials/sections/sections/section.html" %}
+                {% endfor %}
+                {% include "admin/partials/sections/sections/new.html" %}
+            </ul>
+        </div>
+    </div>
+</div>

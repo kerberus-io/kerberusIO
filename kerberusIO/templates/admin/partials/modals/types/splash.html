@@ -1,0 +1,8 @@
+<form id="{{ modal['id'] }}-form" action="{{ url_for('sections') }}" method="post">
+    <div class="form-group">
+        <input type="hidden" name="type" value="1">
+        <input type="text" class="form-control" name="name{{ panel }}" placeholder="name">
+        <input type="text" class="form-control" name="headline{{ panel }}" placeholder="headline">
+        <input type="text" class="form-control" name="copy{{ panel }}" placeholder="copy">
+    </div>
+</form>

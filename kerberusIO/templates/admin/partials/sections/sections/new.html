@@ -1,0 +1,12 @@
+<div>
+    <li class="list-group-item">
+        <nav class="navbar navbar-light bg-light justify-content-end">
+            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#new-section-modal">
+                <i class="fas fa-plus"></i>
+            </a>
+        </nav>
+    </li>
+    {% with modal={ "id": "new-section", "title": "New Section" } %}
+        {% include 'admin/partials/modals/sections/new.html' %}
+    {% endwith %}
+</div>

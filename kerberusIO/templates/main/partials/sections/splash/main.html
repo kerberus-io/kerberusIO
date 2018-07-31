@@ -1,8 +1,16 @@
-<div class="copy">
+<div class="copy"
+    {% if section['bg-color'] %}
+     style="background: {{ section['bg-color'] }}"
+    {% endif %}>
+
     <div {% if section['color'] %}
             style="color: {{ section['color'] }}"
-         {% endif %}>
+    {% endif %}>
         <h1>{{ section["headline"] }}</h1>
-        <h3>{{ section["copy"] }}</h3>
+        <h3>{{ section["ad_copy"] }}
+            {% if section['link'] %}
+                <a href="{{ url_for(section['link']['url']) }}" style="color: {{ section['link-color'] }}">{{ section['link']['text'] }}</a>
+            {% endif %}
+        </h3>
     </div>
 </div>

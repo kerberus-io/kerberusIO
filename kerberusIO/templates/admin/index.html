@@ -11,6 +11,46 @@
 {% block body %}
 
     {% include "admin/partials/sections/header.html" %}
+    <div class="row">
+
+        <div class="col-md-3">
+{#            style="background-color: blue; height: 100vh">#}
+            <div class="container">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">
+                            Account
+                        </a>
+                    </li>
+                    {% if session['admin'] %}
+                        <li class="list-group-item">
+                            <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">
+                                Users
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="list-group-item">
+                        <a class="nav-link" id="sections-tab" data-toggle="tab" href="#sections" role="tab" aria-controls="users" aria-selected="true">
+                            Sections
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="container">
+                <div class="tab-content" id="myTabContent">
+                    {% include 'admin/partials/sections/account.html' %}
+                    {% if session['admin'] %}
+                        {% include 'admin/partials/sections/users.html' %}
+                    {% endif %}
+                    {% include 'admin/partials/sections/sections/main.html' %}
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end row -->
 
 {% endblock %}
 

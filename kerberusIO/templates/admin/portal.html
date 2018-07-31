@@ -1,30 +1,50 @@
 {% extends "admin/layout.html" %}
 
 {% block body %}
+<div class="portal-background">
+    <div class="container">
+        <div class="row portal-row justify-content-center">
 
-<div class="container">
+            <div class="col-md-6 align-self-center">
 
-    <div class="card" style="width: 18rem;">
-        <h5 class="card-header">
-            Admin Portal
-        </h5>
+                <div class="row justify-content-center">
+
+                    <div class="col-10 align-self-center">
+                        <div class="card mb-4 box-shadow h-md-250 portal-card">
+
+                            <h5 class="card-header">
+                                Admin Portal
+                            </h5>
+
+                            <form method="post" action="{{ url_for('login') }}" id="login_form">
+                                <div class="form-group portal-form">
+                                    <input type="text" name="user" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username">
+                                </div>
+                                <div class="form-group portal-form">
+                                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="password">
+                                </div>
+                            </form>
+
+                            <div class="portal-button-bar portal-card-button">
+                                <button type="submit" class="btn align-self-end" form="login_form">login</button>
+                                <a href="javascript:void(0)" class="btn forgot-password" style="color: var(--light)" data-toggle="modal" data-target="#{{ modal['id'] }}-modal">forgot password</a>
+                            </div>
+                        </div>
+                    </div>
 
 
+                </div>
+            </div>
 
-<form method="post" action="{{ url_for('login') }}">
-    <div class="form-group">
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username">
+        </div>
     </div>
-    <div class="form-group">
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">login</button>
-</form>
-
-
-
-    </div>
-
 </div>
+{% endblock %}
+
+{% block foot %}
+    {% with modal=modal %}
+        {% include 'admin/partials/modals/forgot_password.html' %}
+    {% endwith %}
+    {% include "shared/partials/bootstrap/js.html" %}
 
 {% endblock %}

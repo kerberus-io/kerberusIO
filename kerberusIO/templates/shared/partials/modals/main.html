@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal fade" id="{{ modal['id'] }}-modal" tabindex="-1" role="dialog" aria-labelledby="{{ modal['id'] }}-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="{{ modal['id'] }}-modal-long-title">{{ modal['title'] }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% block modal_body %}
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                {% if 'buttons' in modal.keys() %}
+                    {% for button in modal['buttons'] %}
+                        <button type="{{ button['type'] }}" form="{{ modal['id'] }}-form">{{ button['text'] }}</button>
+                    {% endfor %}
+                {% else %}
+                <button type="submit" class="btn btn-primary" form="{{ modal['id'] }}-form">reset</button>
+                {% endif %}
+                <button type="button" class="btn btn-primary" onclick="submitActive()">save</button>
+            </div>
+        </div>
+    </div>
+</div>

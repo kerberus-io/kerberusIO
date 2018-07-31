@@ -1,0 +1,45 @@
+{% extends 'shared/partials/modals/main.html' %}
+{% block modal_body %}
+    <form>
+        <div class="form-group">
+            <label for="select-type">Select Type</label>
+            <select class="form-control select-nav" id="select-type">
+                <option data-target="#splash">Splash Screen</option>
+                <option data-target="#list">List</option>
+                <option data-target="#image">Image</option>
+                <option data-target="#cards">Cards</option>
+                <option data-target="#icons">Icons</option>
+                <option data-target="#text">Text</option>
+                <option data-target="#v-split">Vertical Split Screen</option>
+                <option data-target="#h-split">Horizontal Split Screen</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="tab-content">
+        <div class="tab-pane show active" id="splash" role="tabpanel" aria-labelledby="splash-tab">
+            {% include 'admin/partials/modals/types/splash.html' %}
+        </div>
+        <div class="tab-pane" id="list" role="tabpanel" aria-labelledby="list-tab">
+            {% include 'admin/partials/modals/types/list.html' %}
+        </div>
+        <div class="tab-pane" id="image" role="tabpanel" aria-labelledby="image-tab">
+            {% include 'admin/partials/modals/types/image.html' %}
+        </div>
+        <div class="tab-pane" id="cards" role="tabpanel" aria-labelledby="cards-tab">
+            {% include 'admin/partials/modals/types/cards.html' %}
+        </div>
+        <div class="tab-pane" id="icons" role="tabpanel" aria-labelledby="icons-tab">
+            {% include 'admin/partials/modals/types/icons.html' %}
+        </div>
+        <div class="tab-pane" id="text" role="tabpanel" aria-labelledby="text-tab">
+            {% include 'admin/partials/modals/types/text.html' %}
+        </div>
+        <div class="tab-pane" id="v-split" role="tabpanel" aria-labelledby="v-split-tab">
+            {% include 'admin/partials/modals/types/v_split.html' %}
+        </div>
+        <div class="tab-pane" id="h-split" role="tabpanel" aria-labelledby="h-split-tab">
+            {% include 'admin/partials/modals/types/h_split.html' %}
+        </div>
+    </div>
+{% endblock %}

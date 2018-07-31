@@ -1,5 +1,9 @@
 <div class="list-group">
-    {% for item in section['list'] %}
+    {% for item in section['items'] %}
         {% include "main/partials/sections/list/item.html" %}
+    {% else %}
+        {% with item = {"title": "New List Group", "copy": "This list has no items yet"} %}
+            {% include "main/partials/sections/list/item.html" %}
+        {% endwith %}
     {% endfor %}
 </div>

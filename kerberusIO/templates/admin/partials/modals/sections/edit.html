@@ -1,0 +1,16 @@
+{% extends 'shared/partials/modals/main.html' %}
+{% block modal_body %}
+    <form id="{{ modal['id'] }}-form" action="{{ url_for('sections') }}" method="post">
+        <div class="form-group">
+            <input type="hidden" name="id" value="{{ section['id'] }}">
+            <input type="hidden" name="type" value="1">
+            <input type="text" class="form-control" name="name" placeholder="name" value="{{ section['name'] }}">
+            <input type="text" class="form-control" name="headline" placeholder="headline" value="{{ section['headline'] }}">
+            <input type="text" class="form-control" name="copy" placeholder="copy" value="{{ section['ad_copy'] }}">
+            <input type="text" class="form-control" name="order" placeholder="order" value="{{ section['order'] }}">
+        </div>
+    </form>
+
+
+
+{% endblock %}

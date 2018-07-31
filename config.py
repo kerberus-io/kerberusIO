@@ -19,9 +19,13 @@ class Config(object):
     MAIL_SERVER = "smtp.gmail.com"
     MAIL_PORT = 465
     MAIL_USE_SSL = True
-    MAIL_USERNAME = ""
-    MAIL_PASSWORD = ""
-    MAIL_DEFAULT_SENDER = ""
+    MAIL_USERNAME = os.environ["MAIL_USER"]
+    MAIL_PASSWORD = os.environ["MAIL_PASS"]
+    MAIL_DEFAULT_SENDER = os.environ["MAIL_SEND"]
+    MAIL_DEFAULT_RECEIVER = os.environ["MAIL_RECEIVE"]
+
+    # SQLite Config
+    DATABASE = os.path.join(_basedir, "kerberus.db")
 
 
 # Overrides the default Config Object for Production
@@ -42,3 +46,7 @@ class TestingConfig(Config):
 
 
 del os
+
+if __name__ == '__main__':
+    print(os.path.join(_basedir, Config.DATABASE))
+    print(_basedir)
