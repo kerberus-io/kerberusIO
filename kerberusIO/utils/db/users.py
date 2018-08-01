@@ -28,12 +28,3 @@ class Users(object):
     @property
     def user(self):
         return self._user
-
-
-if __name__ == '__main__':
-    with app.app_context():
-        db = SQLiteDB(Config)
-        u = Users(db, 'asouer', '12345')
-
-        print(u)
-        print(u.user)

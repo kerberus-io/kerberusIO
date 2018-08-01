@@ -6,7 +6,15 @@
             </a>
         </nav>
     </li>
-    {% with modal={ "id": "new-section", "title": "New Section" } %}
-        {% include 'admin/partials/modals/sections/new.html' %}
-    {% endwith %}
+
+    {% if sections %}
+        {% with modal={ "id": "new-section", "title": "New Section" } %}
+            {% include 'admin/partials/modals/sections/new.html' %}
+        {% endwith %}
+    {% else %}
+        {% with modal={ "id": "new-section", "title": "First Section" } %}
+            {% include 'admin/partials/modals/sections/new.html' %}
+        {% endwith %}
+    {% endif %}
+
 </div>

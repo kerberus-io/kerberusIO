@@ -69,6 +69,7 @@ def main():
     if db.exists():
         db_sections = db.get_sections()
 
+        print("db_sections")
         print(db_sections)
 
         if db_sections:
@@ -182,6 +183,9 @@ def sections():
         else:
             print('new section')
             r = request.form
+
+            print(r)
+
             args = {}
 
             for i in r:

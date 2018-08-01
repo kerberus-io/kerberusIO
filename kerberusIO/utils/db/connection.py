@@ -170,14 +170,11 @@ class SQLiteDB(DataBase):
 
         sections = []
 
-        print("rs: ")
-        print(rs)
-
         if rs and len(rs):
             for s in rs:
-
-                sections.append({"name": s[2], "type": s[3], "headline": s[4], "copy": s[5],
-                                 "id": s[0], "order": s[1], "parent": s[6]})
+                print(s)
+                sections.append({"name": s[2], "type": s[3], "headline": s[4], "copy": s[5], "file": s[9],
+                                 "id": s[0], "order": s[1], "parent": s[6], "sub_sec_a": s[7], "sub_sec_b": s[8]})
 
         return sections
 
@@ -188,16 +185,3 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-
-if __name__ == '__main__':
-    with app.app_context():
-
-        db = SQLiteDB(Config)
-        db.renew_db()
-
-        email = 'aaron@kerberus.io'
-        username = 'asouer'
-        fname = 'Aaron'
-        lname = 'Souer'
-
-        db.insert_user(email, username, '12345', fname, lname, 1)

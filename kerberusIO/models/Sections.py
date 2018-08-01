@@ -16,8 +16,10 @@ class Section(ABC):
     _type:      SectionType
     _sub_sec_a: int = None
     _sub_sec_b: int = None
+    _file:      str = None
 
     def __init__(self, db: DataBase=None, args: dict=None):
+
         if db:
             self._db = db
         if args:
@@ -25,12 +27,14 @@ class Section(ABC):
                 self._id = args['id']
             if 'order' in args.keys():
                 self._order = args['order']
+            if 'sub_sec_a' in args.keys():
+                self._sub_sec_a = args['sub_sec_a']
+            if 'sub_sec_b' in args.keys():
+                self._sub_sec_b = args['sub_sec_b']
+            if 'file' in args.keys():
+                self._sub_sec_b = args['file']
             if 'parent' in args.keys():
-                print("args['parent']")
-                print(args['parent'])
                 self._parent_id = args['parent']
-            else:
-                self._parent_id = None
         else:
             self._id = None
             self._order = None
@@ -85,6 +89,10 @@ class Section(ABC):
 
         self._parent_id = parent_id
 
+    @property
+    def file(self):
+        return self._file
+
 
 class Splash(Section):
 
@@ -94,8 +102,7 @@ class Splash(Section):
     def __init__(self, name: str = None, headline: str = None, copy: str = None, args: dict = None, db: DataBase=None):
         super().__init__(db=db, args=args)
         self._type = SectionType.SPLASH
-        print("in Splash __init__")
-        print(args)
+
         if args:
             self._name = args['name']
             self._headline = args['headline']
@@ -165,6 +172,7 @@ class ListItem(Section):
             self._db.execute_query(save_qry, args)
         else:
             args = (self._type.value, self._title, self._copy, self._parent_id)
+
             save_qry = """
             INSERT INTO sections
               (type, headline, copy, parent)
@@ -192,6 +200,7 @@ class List(Section):
 
         if args:
             self._name = args['name']
+
             if 'id' in args.keys():
                 self._get_items()
         else:
@@ -211,12 +220,17 @@ class List(Section):
             self._db.execute_query(save_qry, args)
         else:
             args = (self.name, self._type.value, self.parent)
+
+            print("args in new List().save()")
+            print(args)
+
             save_qry = """
             INSERT INTO sections
-              (name, type)
+              (name, type, parent)
               VALUES ( ?, ?, ? )
             """
-            self._db.execute_query(save_qry, args)
+            self_id = self._db.execute_query(save_qry, args)
+            self._id = self_id
 
     def delete(self):
         for item in self._items:
@@ -258,9 +272,52 @@ class List(Section):
 
 class Image(Section):
 
-    def __init__(self, db: DataBase=None):
-        super().__init__(db=db)
+    _headline:  str = None
+    _copy:      str = None
+
+    def __init__(self, db: DataBase=None, args: dict=None, name: str=None, headline: str=None, copy: str=None, file: str=None):
+        super().__init__(db=db, args=args)
         self._type = SectionType.IMAGE
+
+        print(args)
+
+        if args:
+            self._name = args['name']
+            self._headline = args['headline']
+            self._copy = args['copy']
+            self._file = args['file']
+        else:
+            self._name = name
+            self._headline = headline
+            self._copy = copy
+            self._file = file
+
+    def save(self):
+        if self.id:
+            args = (self.order, self.name, self._type.value, self.headline, self.ad_copy, self.parent, self.file, self.id)
+            update_qry = """
+            UPDATE sections
+              SET sec_order = ?, name = ?, type = ?, headline = ?, copy = ?, parent = ?, filename = ?
+              WHERE section_id = ?
+            """
+            self._db.execute_query(update_qry, args)
+        else:
+            args = (self.name, self._type.value, self.headline, self.ad_copy, self.file, self.parent,)
+            new_qry = """
+            INSERT INTO sections
+              (name, type, headline, copy, filename, parent)
+              VALUES ( ?, ?, ?, ?, ?, ?)
+            """
+            self_id = self._db.execute_query(new_qry, args)
+            self._id = self_id
+
+    @property
+    def headline(self):
+        return self._headline
+
+    @property
+    def ad_copy(self):
+        return self._copy
 
 
 class Cards(Section):
@@ -296,37 +353,20 @@ class VerticalSplit(Section):
 
         if args:
 
-            print("in if args")
-            print(args)
-            self._sub_sec_a = 6
-            self._sub_sec_b = 7
-
-            print(self._sub_sec_a)
-            print(self._sub_sec_b)
-
             self._name = args['name']
 
-            print("before if left")
             if args['left']:
-                print("args['left']")
-                print(args['left'])
+
                 left = section_factory(db=db, sec_type=int(args['left']['type']), args=args['left'])
                 left.save()
                 self.add_left_section(left)
             else:
-                print("else left")
-                print("self._sub_sec_a")
-                print(self._sub_sec_a)
                 left = section_factory(db=db, id=self._sub_sec_a)
-                print("left.parent")
-                print(left.parent)
-                print("left.title")
-
-                print(left.parent)
                 left.save()
                 self.add_left_section(left)
 
             if args['right']:
+
                 right = section_factory(db=db, sec_type=int(args['right']['type']), args=args['right'])
                 right.save()
                 self.add_right_section(right)
@@ -335,10 +375,8 @@ class VerticalSplit(Section):
                 right.save()
                 self.add_right_section(right)
 
-
         else:
             self._name = name
-
 
     @property
     def left(self):
@@ -353,7 +391,8 @@ class VerticalSplit(Section):
         if self.id:
             pass
         else:
-            args = (self.name, self._type.value, self._left_section.id, self._right_section.id)
+            args = (self.name, self._type.value, self._sub_sec_a, self._sub_sec_b)
+
             save_qry = """
             INSERT INTO sections
               (name, type, sub_sec_a, sub_sec_b) 
@@ -369,9 +408,11 @@ class VerticalSplit(Section):
             self._left_section.save()
 
     def add_left_section(self, sec: Section=None):
+        self._sub_sec_a = sec.id
         self._left_section = sec
 
     def add_right_section(self, sec: Section=None):
+        self._sub_sec_b = sec.id
         self._right_section = sec
 
 
@@ -406,8 +447,6 @@ def section_factory(sec_type: Union[SectionType, int]=None, db: DataBase=None, d
 
     if id:
 
-        print("if id in fact")
-
         sec_qry = """
         SELECT * FROM sections
           WHERE section_id = ?
@@ -415,9 +454,6 @@ def section_factory(sec_type: Union[SectionType, int]=None, db: DataBase=None, d
         args = int(id),
 
         rs = db.get_result_set(sec_qry, args)[0]
-
-        print("rs: ")
-        print(rs)
 
         sf_args = {"name": rs[2], "type": rs[3], "headline": rs[4], "copy": rs[5],
                    "id": rs[0], "order": rs[1], "parent": rs[6]}
@@ -429,20 +465,21 @@ def section_factory(sec_type: Union[SectionType, int]=None, db: DataBase=None, d
         print(db_rs)
         pass
     else:
-        if sec_type == SectionType(1):
+        if sec_type == SectionType(1):  # Splash Screen
             if db:
                 return Splash(db=db, args=args)
             else:
                 pass
                 return Splash()
-        if sec_type == SectionType(2):
+        if sec_type == SectionType(2):  # List
             if db:
+
                 return List(db=db, args=args)
             else:
                 return List()
-        if sec_type == SectionType(3):
+        if sec_type == SectionType(3):  # Image
             if db:
-                return Image(db=db)
+                return Image(db=db, args=args)
             else:
                 return Image()
         if sec_type == SectionType(4):
@@ -478,7 +515,6 @@ def section_factory(sec_type: Union[SectionType, int]=None, db: DataBase=None, d
                 base_args['left'] = left_args
                 base_args['right'] = right_args
 
-                print("base_args: ")
                 print(base_args)
 
                 return VerticalSplit(db=db, args=base_args)
@@ -496,16 +532,4 @@ def section_factory(sec_type: Union[SectionType, int]=None, db: DataBase=None, d
                 return ListItem(db=db, args=args)
             else:
                 return ListItem()
-
-
-if __name__ == '__main__':
-    test = section_factory(1)
-
-    test.set_headline("test")
-    test.set_copy("testing 123")
-
-    print(test.name)
-    print(test.type)
-    print(test.headline)
-    print(test.copy)
 

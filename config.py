@@ -46,7 +46,3 @@ class TestingConfig(Config):
 
 
 del os
-
-if __name__ == '__main__':
-    print(os.path.join(_basedir, Config.DATABASE))
-    print(_basedir)

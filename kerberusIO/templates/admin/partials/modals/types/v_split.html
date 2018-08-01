@@ -5,7 +5,7 @@
         <label>Left Pain</label>
     </div>
     <div class="form-group">
-        <select class="form-control select-nav" name="section-a">
+        <select class="form-control select-nav" name="type-a">
             <option data-target="#splash-a" value="1">Splash</option>
             <option data-target="#list-a" value="2">List</option>
             <option data-target="#image-a" value="3">Image</option>
@@ -41,7 +41,7 @@
 
     <div class="form-group">
         <label>Right Pain</label>
-        <select class="form-control select-nav" name="section-b">
+        <select class="form-control select-nav" name="type-b">
             <option data-target="#splash-b" value="1">Splash</option>
             <option data-target="#list-b" value="2">List</option>
             <option data-target="#image-b" value="3">Image</option>
@@ -54,7 +54,7 @@
     <div class="tab-content">
         {% with panel = '-b' %}
             <div class="tab-pane show active" id="splash-b" role="tabpanel" aria-labelledby="splash-tab">
-                    {% include 'admin/partials/modals/split/types/splash.html' %}
+                {% include 'admin/partials/modals/split/types/splash.html' %}
             </div>
             <div class="tab-pane" id="list-b" role="tabpanel" aria-labelledby="list-tab">
                 {% include 'admin/partials/modals/split/types/list.html' %}

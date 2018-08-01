@@ -59,7 +59,8 @@ CREATE TABLE sections (
   copy        VARCHAR(120)  DEFAULT NULL,
   parent      INTEGER       DEFAULT NULL,
   sub_sec_a   INTEGER       DEFAULT NULL,
-  sub_sec_b   INTEGER       DEFAULT NULL
+  sub_sec_b   INTEGER       DEFAULT NULL,
+  filename    VARCHAR(120)  DEFAULT NULL
 );
 """
 
