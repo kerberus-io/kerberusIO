@@ -4,7 +4,9 @@
             <h3 class="mb-0">
                 {{ owner["name"] }}
             </h3>
-            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text mb-auto">
+                {{ owner['bio'] }}
+            </p>
             <span class="social">
                 <a href="https://github.com/{{ owner['github'] }}" target="_blank"><i class="fab fa-github-square"></i></a>
                 <a href="https://linkedin.com/in/{{ owner['linkedin'] }}" target="_blank"><i class="fab fa-linkedin"></i></a>

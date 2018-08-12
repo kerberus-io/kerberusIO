@@ -6,6 +6,7 @@ from kerberusIO.utils.mailer import mailer
 from kerberusIO.utils.db.connection import SQLiteDB
 from kerberusIO.utils.sessions.session import Session
 from kerberusIO.models.Sections import *
+from kerberusIO.models.Enum.section_types import *
 
 from kerberusIO.utils.files.uploader import Uploader
 
@@ -22,9 +23,12 @@ def main():
 
     phone = {"pretty": "(612) 460 - 7063", "link": "612-460-7063"}
     twitter = {"handle": "kerberusIO"}
+
+    aaron_bio = "I am a full stack developer, with a passion for problem solving."
+    lincoln_bio = "I am a system engineer turned developer with a background in business."
     owners = [
-        {"name": "Aaron Souer", "github": "asouer", "linkedin": "asouer"},
-        {"name": "Lincoln Yellick", "github": "lyellick", "linkedin": "lincoln-hach-yellick-3867b088"}
+        {"name": "Aaron Souer", "github": "asouer", "linkedin": "asouer", "bio": aaron_bio},
+        {"name": "Lincoln Yellick", "github": "lyellick", "linkedin": "lyellick", "bio": lincoln_bio}
     ]
 
     home = {"headline": "kerberus.io", "copy": "freelance development", "name": "home",
@@ -57,9 +61,9 @@ def main():
     test = {"type": "splash", "headline": "Words 'n Shit", "name": 'words', "copy": "I'm like a poet"}
     test_two = {"type": "splash", "headline": "Dynamic Stuff", "name": 'code', "copy": "oh yeah menu"}
 
-    contact_page = {"phone": phone, "twitter": twitter, "owners": owners, "name": "contact", "type": "contact"}
+    contact_page = {"phone": phone, "twitter": twitter, "owners": owners, "name": "contact", "type": "contact", "order": 500}
 
-    temp_sections = [home, about, contact_page]
+    # temp_sections = [home, about, contact_page]
     # temp_sections = [home, services, about, contact_page]
     # temp_sections = [home, services, about, test, test_two, contact_page]
 
@@ -70,6 +74,17 @@ def main():
                 "type": "splash",
                 "color": "var(--black)",
                 "link-color": "pink"}]
+
+    home_dict = {"headline": "kerberus.io", "copy": "freelance development", "name": "home",
+                "type": "splash"}
+    home = section_factory(SectionType.SPLASH, db=db, args=home_dict)
+    home.set_order(0)
+
+
+
+
+
+    temp = [home, contact_page]
 
     if db.exists():
         db_sections = db.get_sections()
@@ -82,7 +97,8 @@ def main():
             section_objs = db_to_objects(db_sections)
             sorted_sections = sort_sections(section_objs)
 
-            return render_template("main/index.html", sections=sorted_sections)
+
+            return render_template("main/index.html", sections=temp)
         else:
             return render_template("main/index.html", sections=default)
     else:

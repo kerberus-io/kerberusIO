@@ -200,12 +200,3 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-
-if __name__ == '__main__':
-    db = SQLiteDB(Config)
-
-    test = "kjgk"
-
-    print(db)
-    repr(db)
-    repr(test)
