@@ -3,10 +3,11 @@ import abc
 from abc import ABC
 from config import Config
 from typing import Union
-from kerberusIO.utils.db.schema import schema
+from kerberusIO.utils.db.schema import sqlite_schema, postgress_schema
 from kerberusIO.application import app
 from kerberusIO.utils.secrets.hashes import Secrets
 # from kerberusIO.models.Sections import section_factory
+from typing import Type
 from flask import g
 import os
 
@@ -15,7 +16,7 @@ class DataBase (ABC):
 
     _config: Config
 
-    def __init__(self, config: Config):
+    def __init__(self, config: Type[Config]):
         self._config = config
 
     @abc.abstractmethod
@@ -23,12 +24,19 @@ class DataBase (ABC):
         pass
 
     @abc.abstractmethod
+    def exists(self):
+        pass
+
+    @abc.abstractmethod
     def execute_query(self, qry: str, args: Union[tuple, str]=None):
         pass
 
     @abc.abstractmethod
-    def get_result_set(self, qry: str, args: tuple) -> [tuple]:
+    def get_result_set(self, qry: str, args: tuple=None) -> [tuple]:
         pass
+
+    def __str__(self) -> str:
+        return "<DataBase object at {}>".format(hex(id(self)))
 
 
 class SQLiteDB(DataBase):
@@ -40,6 +48,9 @@ class SQLiteDB(DataBase):
         if db is None:
             db = g._database = sqlite3.connect(self._config.DATABASE)
         return db
+
+    def exists(self):
+        return os.path.isfile(self._config.DATABASE)
 
     def execute_query(self, qry: str, args: Union[tuple, str]=None) -> Union[int, None]:
         # TODO: think about returning
@@ -101,13 +112,17 @@ class SQLiteDB(DataBase):
         print("conn.close()")
         conn.close()
 
-    def exists(self):
-        return os.path.isfile(self._config.DATABASE)
+    def __str__(self) -> str:
+        return "<SQLiteDB object at {}>".format(hex(id(self)))
 
     # TODO: The following methods may need to be refactored into their own class
 
     def init_db(self):
         db = getattr(g, '_database', None)
+        schema = sqlite_schema
+        if Config.DB_TYPE == "postgress":
+            schema = postgress_schema
+
         if db is None:
             if not os.path.isfile(self._config.DATABASE):
                 db = g._database = sqlite3.connect(self._config.DATABASE)
@@ -120,7 +135,7 @@ class SQLiteDB(DataBase):
         if db is None:
             if os.path.isfile(self._config.DATABASE):
                 db = g._database = sqlite3.connect(self._config.DATABASE)
-                for qry in schema:
+                for qry in sqlite_schema:
                     print(qry)
                     db.execute(qry)
 
@@ -172,7 +187,7 @@ class SQLiteDB(DataBase):
 
         if rs and len(rs):
             for s in rs:
-                print(s)
+                # print(s)
                 sections.append({"name": s[2], "type": s[3], "headline": s[4], "copy": s[5], "file": s[9],
                                  "id": s[0], "order": s[1], "parent": s[6], "sub_sec_a": s[7], "sub_sec_b": s[8]})
 
@@ -185,3 +200,12 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+
+if __name__ == '__main__':
+    db = SQLiteDB(Config)
+
+    test = "kjgk"
+
+    print(db)
+    repr(db)
+    repr(test)

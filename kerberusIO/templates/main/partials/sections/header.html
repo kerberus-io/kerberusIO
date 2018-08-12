@@ -4,16 +4,20 @@
         <a class="navbar-brand noto-sans" id="home-link" href="#top">
             <span class="logo-accent"><</span>kerberus <i id="home-bullet" class="fas fa-circle logo-bullet active"></i> <span class="logo-i-style">i</span>o<span class="logo-accent">></span>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 {% for section in sections[1:] %}
-                    <li class="nav-item">
-                        <a class="nav-link" id="{{ section['name'] }}-link" href="#{{ section['name'] }}">{{ section['name'] }}</a>
-                    </li>
+                    {% if section.name == 'home' %}
+                    {% elif section.order != -1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" id="{{ section['name'] }}-link" href="#{{ section['name'] }}">{{ section['name'] }}</a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

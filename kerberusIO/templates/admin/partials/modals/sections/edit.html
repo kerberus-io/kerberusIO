@@ -4,10 +4,45 @@
         <div class="form-group">
             <input type="hidden" name="id" value="{{ section['id'] }}">
             <input type="hidden" name="type" value="1">
+        {% if section.order == 0 %}
+            <input type="hidden" class="form-control" name="name" value="home">
+        {% else %}
             <input type="text" class="form-control" name="name" placeholder="name" value="{{ section['name'] }}">
+        {% endif %}
             <input type="text" class="form-control" name="headline" placeholder="headline" value="{{ section['headline'] }}">
             <input type="text" class="form-control" name="copy" placeholder="copy" value="{{ section['ad_copy'] }}">
-            <input type="text" class="form-control" name="order" placeholder="order" value="{{ section['order'] }}">
+        {% if section.order != 0 %}
+
+            {% if a %}
+
+                <select class="form-control" name="order">
+                    {% for i in range(active) %}
+                        {% if i == 0 %}
+                            <option value="{{ i - 1 }}">inactive</option>
+                        {% else %}
+                            <option value="{{ i }}" {% if section.order == i %}selected{% endif %}>{{ i }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+            {% else %}
+
+                <select class="form-control" name="order">
+                    {% for i in range(active + 1) %}
+                        {% if i == 0 %}
+                            <option value="{{ i - 1 }}">inactive</option>
+                        {% else %}
+                            <option value="{{ i }}" {% if section.order == i %}selected{% endif %}>{{ i }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+            {% endif %}
+
+        {% endif %}
+
+
+{#            <input type="text" class="form-control" name="order" placeholder="order" value="{{ section['order'] }}">#}
         </div>
     </form>
 

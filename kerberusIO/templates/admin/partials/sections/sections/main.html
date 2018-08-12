@@ -3,9 +3,25 @@
         <div class="jumbotron">
 
             <ul class="list-group">
-                <li class="list-group-item active">Sections</li>
+                <li class="list-group-item active">Active Sections</li>
                 {% for section in sections %}
-                    {% include "admin/partials/sections/sections/section.html" %}
+                    {% with a = True %}
+                        {% if section.order >= 0 %}
+                            {% include "admin/partials/sections/sections/section.html" %}
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+{#                {% include "admin/partials/sections/sections/new.html" %}#}
+            </ul>
+
+            <ul class="list-group">
+                <li class="list-group-item active">Inactive Sections</li>
+                {% for section in sections %}
+                    {% with a = False %}
+                        {% if section.order < 0 %}
+                            {% include "admin/partials/sections/sections/section.html" %}
+                        {% endif %}
+                    {% endwith %}
                 {% endfor %}
                 {% include "admin/partials/sections/sections/new.html" %}
             </ul>

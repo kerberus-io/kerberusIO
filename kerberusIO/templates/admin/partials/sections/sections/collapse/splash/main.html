@@ -1,7 +1,65 @@
 <ul class="list-group">
-    <li class="list-group-item active">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Morbi leo risus</li>
-    <li class="list-group-item">Porta ac consectetur ac</li>
-    <li class="list-group-item">Vestibulum at eros</li>
+    <li class="list-group-item">
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="hidden" name="id" value="5">
+                    <input type="hidden" name="type" value="1">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" name="name" placeholder="name" value="789">
+                    <label for="headline">Headline:</label>
+                    <input type="text" class="form-control" name="headline" placeholder="headline" value="third">
+                    <label for="copy">Copy:</label>
+                    <input type="text" class="form-control" name="copy" placeholder="copy" value="somthing about chests">
+                </div>
+            </div>
+            <div class="col-md-6">
+
+
+                <label for="filename">Background Image:</label>
+                <label id="filename" class="form-control">
+                    {% if section['filename'] %}
+                        {{ section['filename'] }}
+                    {% else %}
+                        None
+                    {% endif %}
+                </label>
+                <label for="choose-file">Choose Image:</label>
+                <input type="file" class="form-control-file" id="choose-file" aria-describedby="fileHelp">
+
+                <input type="button" value="save">
+                <input type="button" value="cancel">
+
+            </div>
+        </div>
+
+
+
+
+    </li>
+{#    <li class="list-group-item active">{{ section['name'] }} - Edit</li>#}
+{#    <li class="list-group-item">#}
+{#        <ul class="list-group">#}
+            <li class="list-group-item">
+                <nav class="navbar navbar-light bg-light justify-content-between">
+                    <a class="navbar-brand">Style</a>
+                    <div class="nav ml-auto">
+                        <a class="nav-link" data-toggle="collapse" href="#{{ section['name'] }}-style-collapse" role="button" aria-expanded="false" aria-controls="{{ section['name'] }}-style-collapse">
+                            <i class="fas fa-angle-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            </li>
+            <div class="collapse" id="{{ section['name'] }}-style-collapse">
+                <li class="list-group-item">
+
+                    {% include 'admin/partials/sections/sections/collapse/style.html' %}
+
+                </li>
+            </div>
+{#        </ul>#}
+{#    </li>#}
+
 </ul>

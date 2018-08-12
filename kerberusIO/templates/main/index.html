@@ -16,7 +16,9 @@
     <main>
 
         {% for section in sections %}
-            {% include "main/partials/sections/section.html" %}
+            {% if section.order >= 0 %}
+                {% include "main/partials/sections/section.html" %}
+            {% endif %}
         {% endfor %}
 
         {% include "main/partials/sections/footer.html" %}

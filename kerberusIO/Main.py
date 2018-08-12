@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, session
+from flask import render_template, redirect, request, url_for, session, flash, send_from_directory, get_flashed_messages
 from config import Config
 from kerberusIO.utils.db.users import Users
 from kerberusIO.application import app
@@ -6,6 +6,11 @@ from kerberusIO.utils.mailer import mailer
 from kerberusIO.utils.db.connection import SQLiteDB
 from kerberusIO.utils.sessions.session import Session
 from kerberusIO.models.Sections import *
+
+from kerberusIO.utils.files.uploader import Uploader
+
+from werkzeug.utils import secure_filename
+import os
 
 
 db = SQLiteDB(Config)
@@ -69,17 +74,15 @@ def main():
     if db.exists():
         db_sections = db.get_sections()
 
-        print("db_sections")
-        print(db_sections)
+        # print("db_sections")
+        # print(db_sections)
 
         if db_sections:
 
-            sections = db_to_objects(db_sections)
+            section_objs = db_to_objects(db_sections)
+            sorted_sections = sort_sections(section_objs)
 
-            for s in sections:
-                print(s.name)
-
-            return render_template("main/index.html", sections=sections)
+            return render_template("main/index.html", sections=sorted_sections)
         else:
             return render_template("main/index.html", sections=default)
     else:
@@ -101,7 +104,7 @@ def admin():
 
     if db.exists():
 
-        print("db exists")
+        # print("db exists")
 
         modal = {"id": "forgot-password", "title": "Forgot Password"}
 
@@ -109,9 +112,11 @@ def admin():
             if session['auth']:
                 users = ["one", "two", "three"]
 
-                sections = db_to_objects(db.get_sections())
+                section_objs = db_to_objects(db.get_sections())
+                sorted_sections, active = sort_sections(section_objs, True)
 
-                return render_template("admin/index.html", user=session['user'], users=users, sections=sections)
+                return render_template("admin/index.html", user=session['user'], users=users,
+                                       sections=sorted_sections, active=active)
         return render_template("admin/portal.html", modal=modal)
 
     else:
@@ -132,7 +137,7 @@ def login():
 
         if ses.authenticated:
             serialize_session(ses)
-            print(session)
+            # print(session)
             return redirect(url_for('admin'))
         else:
             return redirect(url_for('admin'))
@@ -149,39 +154,98 @@ def logout():
     return redirect(url_for('admin'))
 
 
-@app.route('/admin/reset', methods=['POST', 'GET'])
-def reset():
-
-    print(request.form)
-
-    return redirect(url_for('admin'))
-
-
 @app.route('/admin/sections', methods=['POST', 'GET'])
 def sections():
 
     if request.method == 'POST':
         sec = request.form
 
+        print("sec")
+        print(sec)
+
         if 'action' in sec.keys():
             if sec['action'] == 'delete':
 
                 sec = section_factory(db=db, id=sec['id'])
 
-                print('sec in action')
-                print(sec)
+                # print('sec in action')
+                # print(sec)
 
                 sec.delete()
 
                 return redirect(url_for('admin'))
 
-        if 'section_id' in sec.keys():
-            print('edit section')
+        if 'id' in sec.keys():
+            # print('edit section')
 
+            print("id is there")
             print(request.form)
+
+            sec = section_factory(db=db, id=request.form['id'])
+            secs = get_sections()
+
+            print(sec)
+            print(secs)
+
+            print(int(sec.order))
+            print(request.form['order'])
+
+            if int(sec.order) != int(request.form['order']):
+
+                old_index = int(sec.order)
+                new_index = int(request.form['order'])
+
+                # if new_index > 0:
+                print("different")
+                len_range = range(len(secs))
+                len_ = len(len_range)
+                print(len_range)
+
+                moved = secs.pop(old_index)
+
+                print("new_index")
+                print(new_index)
+
+                if new_index >= len_ - 1:
+                    print("append to end")
+                    secs.append(moved)
+                elif 0 < new_index < len_ - 1:
+                    print("insert in list")
+                    secs.insert(new_index, moved)
+
+                inactive = [x for x in secs if x.order < 0]
+
+                for s in reversed(len_range):
+                    # the Debugger breaks this cause it runs twice. this try except makes it work
+
+                    try:
+                        secs.pop(s - 1)
+                    except:
+                        pass
+
+                len_range = range(len(secs))
+                for i in len_range:
+                    if i < len(len_range) - 1:
+                        secs[i + 1].set_order(i + 1)
+                        print(secs[i + 1].name)
+                        print(i + 1)
+
+                if new_index < 0:
+                    moved.set_order(-1)
+                    secs.append(moved)
+
+                for i in inactive:
+                    secs.append(i)
+
+                for s in secs:
+                    print(s.order)
+                    print(s.name)
+                    s.save()
+
+            # print(request.form)
             return redirect(url_for('admin'))
         else:
-            print('new section')
+            # print('new section')
             r = request.form
 
             print(r)
@@ -195,6 +259,10 @@ def sections():
                     args[i] = r[i]
 
             sec = section_factory(sec_type=args['type'], db=db, args=args)
+
+            print("sec.order")
+            print(sec.order)
+
             sec.save()
 
             return redirect(url_for('admin'))
@@ -202,24 +270,24 @@ def sections():
 
 @app.route('/admin/sections/lists/items', methods=['POST', 'GET'])
 def list_item():
-    print(request.form)
+    # print(request.form)
     r = request.form
 
-    print(r['parent'])
+    # print(r['parent'])
 
     parent = section_factory(db=db, id=r['parent'])
     args = {"parent": r['parent'], "headline": r['headline'], "copy": r['copy']}
 
-    print(r['type'])
+    # print(r['type'])
 
     item = section_factory(sec_type=int(r['type']), db=db, args=args)
 
-    print(item)
+    # print(item)
 
     parent.add_item(item)
 
-    print("parent.items")
-    print(parent.items[0].copy)
+    # print("parent.items")
+    # print(parent.items[0].copy)
 
     parent.save()
 
@@ -255,7 +323,7 @@ def test_confirm():
 
 
 def serialize_session(session_obj: Session):
-    print("in serialize_session")
+    # print("in serialize_session")
     ser = session_obj.serialize()
 
     for item in ser:
@@ -278,3 +346,117 @@ def db_to_objects(db_sections: tuple) -> [Section]:
         sections.append(section_factory(sec_type=args['type'], db=db, args=args))
 
     return sections
+
+
+def sort_sections(section_objects: [Section], admin: bool=False):
+
+    section_objects.sort(key=lambda x: x.order, reverse=False)
+
+    temp_list = []
+
+    sec_i = len(section_objects) - 1
+
+    for _ in section_objects:
+
+        if int(section_objects[sec_i].order) is -1:
+            temp_list.append(section_objects.pop(sec_i))
+
+        sec_i -= 1
+
+    sorted = []
+
+    for s in section_objects:
+        sorted.append(s)
+
+    for s in temp_list:
+        sorted.append(s)
+
+    if admin:
+
+        inactive = len(temp_list)
+        active = len(section_objects) - inactive + 1
+
+        print(active)
+
+        return sorted, active
+    else:
+        return sorted
+
+
+def get_sections():
+    section_rs = db.get_sections()
+    if section_rs:
+        sec_objs = db_to_objects(section_rs)
+        sorted_secs = sort_sections(sec_objs)
+        return sorted_secs
+    else:
+        return []
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in Config.ALLOWED_EXTENSIONS
+
+
+@app.route('/uploads', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        print(file.filename)
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+
+        file.filename = "testFileName.jpg"
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
+
+    print(get_flashed_messages())
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
+
+
+@app.route('/uploads_test', methods=['GET', 'POST'])
+def upload_test():
+    if request.method == 'POST':
+        u = Uploader(Config)
+
+        filename = u.upload_file(request, renamed="test_upload")
+
+        return redirect(url_for('uploaded_file', filename=filename))
+
+        pass
+
+    print(get_flashed_messages())
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''

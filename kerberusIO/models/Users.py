@@ -2,6 +2,7 @@ import datetime
 from kerberusIO.utils.secrets.hashes import Secrets
 from kerberusIO.models.Profile import Profile
 
+
 class User(object):
     _id: int
     _created: datetime.datetime

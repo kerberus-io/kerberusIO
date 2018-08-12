@@ -25,7 +25,12 @@ class Config(object):
     MAIL_DEFAULT_RECEIVER = os.environ["MAIL_RECEIVE"]
 
     # SQLite Config
+    DB_TYPE = "sqlite"  # or "postgress"
     DATABASE = os.path.join(_basedir, "kerberus.db")
+
+    # Files Config
+    UPLOAD_FOLDER = os.path.join(_basedir, "kerberusIO", "static", "img")
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf'])
 
 
 # Overrides the default Config Object for Production
@@ -46,3 +51,7 @@ class TestingConfig(Config):
 
 
 del os
+
+if __name__ == '__main__':
+    print(_basedir)
+    print(Config.UPLOAD_FOLDER)
